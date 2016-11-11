@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --watch",
+    "deploy": "echo TODO: Write deploy function && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

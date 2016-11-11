@@ -1,0 +1,21 @@
+.piece {
+  display: inline-block;
+  box-sizing: border-box;
+
+  height: 50px;
+  width: 50px;
+
+  border: solid 1px #000;
+
+  &.piece-used {
+    background: #ccc;
+  }
+
+  &.piece-block {
+    background: #333;
+  }
+
+  &.piece-active {
+    box-shadow: inset 0 0 10px 3px lightblue;
+  }
+}
