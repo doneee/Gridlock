@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 import Playfield from './Playfield';
 
@@ -9,9 +12,9 @@ const Puzzle = [
   [0,0,0,2,0,0],
   [0,0,0,0,0,0],
   [0,0,0,0,2,0],
-]
+];
 
-class Game extends React.Component {
+class Game extends Component {
 
   constructor(props) {
     super(props);
@@ -20,7 +23,7 @@ class Game extends React.Component {
   render () {
     return (
       <div>
-        <Playfield height={6} width={6} playfield={Puzzle} />
+        <Playfield playfield={Puzzle} />
       </div>
     );
   }

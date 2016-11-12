@@ -1,4 +1,5 @@
 import React, {PropTypes, Component} from 'react';
+import KeyCode from 'keycode-js';
 import Piece from './Piece';
 
 import PieceTypes from '../enums/PieceTypes';
@@ -13,13 +14,24 @@ class Playfield extends Component {
     this.startGame = this.startGame.bind(this);
     this.updatePieceState = this.updatePieceState.bind(this);
     this.handlePieceTapped = this.handlePieceTapped.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.updateCursorPosition = this.updateCursorPosition.bind(this);
+
+    document.addEventListener('keydown', this.handleKeyDown);
 
     this.state = {
       cursorPosition: [-1, -1],
       started: false,
       playfield: props.playfield || new Array(props.height).fill(new Array(props.width).fill(PieceTypes.Free))
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handlePieceTapped (position) {
@@ -35,6 +47,10 @@ class Playfield extends Component {
 
       }
     }
+  }
+
+  handleKeyDown (e) {
+
   }
 
   updateCursorPosition(position) {
@@ -61,13 +77,10 @@ class Playfield extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-
-  }
-
   render () {
+    let {started} = this.state;
     return (
-      <div className="playfield">
+      <div className={`playfield ${started ? 'started' : 'unstarted'}`}>
         {this.renderRows()}
       </div>
     );

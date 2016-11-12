@@ -16,6 +16,31 @@
   }
 
   &.piece-active {
-    box-shadow: inset 0 0 10px 3px lightblue;
+    position: relative;
+    z-index: 2;
   }
+
+  .move {
+    position: absolute;
+    height: 48px;
+    width: 48px;
+    box-shadow: inset 0 0 20px 6px lightblue;
+
+    &.up {
+      top: -50px;
+    }
+    &.down {
+      top: 50px;
+    }
+    &.left {
+      left: -50px;
+    }
+    &.right {
+      left: 50px;
+    }
+  }
+}
+
+.playfield.unstarted .piece.piece-active {
+  box-shadow: inset 0 0 10px 3px lightblue;
 }

@@ -9,12 +9,17 @@ class Piece extends Component {
   constructor(props) {
     super(props);
 
-    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleTouchTap = this.handleTouchTap.bind(this);
+    this.handleDirectionTap = this.handleDirectionTap.bind(this);
     this.getValidDirections = this.getValidDirections.bind(this);
   }
 
-  handleMouseDown (e) {
+  handleTouchTap (e) {
     this.props.pieceTapped(this.props.position, 1);
+  }
+
+  handleDirectionTap (direction, e) {
+    console.log(direction, e.type);
   }
 
   getValidDirections () {
@@ -30,16 +35,24 @@ class Piece extends Component {
   }
 
   render () {
-    let {pieceState, pieceActive} = this.props;
+    let {started, pieceState, pieceActive} = this.props;
 
     let directions = this.getValidDirections();
+    let directionButtons = [];
 
-    if (pieceActive) console.log(directions);
+    if (started && pieceActive) {
+      directionButtons = Object.keys(directions)
+        .map((direction) => directions[direction] ? 
+          <div key={direction} className={`move ${direction}`} onMouseDown={this.handleDirectionTap.bind(null, direction)} /> : '');      
+    }
+
     return (
       <div 
         className={`piece ${PieceClasses[pieceState]} ${pieceActive ? 'piece-active' : ''}`}
         style={{height: 'calc(100% / 6)', width: 'calc(100% / 6)'}}
-        onMouseDown={this.handleMouseDown} />
+        onTouchTap={this.handleTouchTap}>
+          {directionButtons}
+        </div>
     );
   }
 }
@@ -50,7 +63,8 @@ Piece.propTypes = {
   pieceActive: PropTypes.bool,
   pieceTapped: PropTypes.func,
   rows: PropTypes.number,
-  columns: PropTypes.number
+  columns: PropTypes.number,
+  started: PropTypes.bool
 };
 
 Piece.defaultProps = {
@@ -59,7 +73,8 @@ Piece.defaultProps = {
   pieceActive: false,
   pieceTapped: () => {},
   rows: 0,
-  columns: 0
+  columns: 0,
+  started: false
 }
 
 export default Piece;
