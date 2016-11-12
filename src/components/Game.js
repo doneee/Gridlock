@@ -8,10 +8,10 @@ import Playfield from './Playfield';
 const Puzzle = [
   [0,0,0,0,0,0],
   [0,2,0,0,0,0],
-  [0,0,0,0,0,0],
   [0,0,0,2,0,0],
+  [0,0,0,2,0,0],
+  [0,2,0,0,0,0],
   [0,0,0,0,0,0],
-  [0,0,0,0,2,0],
 ];
 
 class Game extends Component {

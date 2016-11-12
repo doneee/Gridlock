@@ -11,7 +11,6 @@ class Piece extends Component {
 
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleDirectionTap = this.handleDirectionTap.bind(this);
-    this.getValidDirections = this.getValidDirections.bind(this);
   }
 
   handleTouchTap (e) {
@@ -22,22 +21,10 @@ class Piece extends Component {
     console.log(direction, e.type);
   }
 
-  getValidDirections () {
-    let {rows, columns, position, playfield} = this.props;
-
-    return {
-      up: !((position[0] < 1) || (playfield[position[0] - 1][position[1]] !== PieceTypes.Free)),
-      down: !((position[0] > rows - 2) || (playfield[position[0] + 1][position[1]] !== PieceTypes.Free)),
-      left: !((position[1] < 1) || (playfield[position[0]][position[1] - 1] !== PieceTypes.Free)),
-      right: !((position[1] > columns - 2) || (playfield[position[0]][position[1] + 1] !== PieceTypes.Free))
-    }
-
-  }
-
   render () {
     let {started, pieceState, pieceActive} = this.props;
 
-    let directions = this.getValidDirections();
+    let directions = this.props.getValidDirections(this.props.position);
     let directionButtons = [];
 
     if (started && pieceActive) {
@@ -64,7 +51,8 @@ Piece.propTypes = {
   pieceTapped: PropTypes.func,
   rows: PropTypes.number,
   columns: PropTypes.number,
-  started: PropTypes.bool
+  started: PropTypes.bool,
+  getValidDirections: PropTypes.func
 };
 
 Piece.defaultProps = {
@@ -74,7 +62,8 @@ Piece.defaultProps = {
   pieceTapped: () => {},
   rows: 0,
   columns: 0,
-  started: false
+  started: false,
+  getValidDirections: () => {}
 }
 
 export default Piece;
