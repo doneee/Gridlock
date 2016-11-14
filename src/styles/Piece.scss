@@ -12,7 +12,7 @@
   }
 
   &.piece-block {
-    background: #333;
+    background: #777;
   }
 
   &.piece-active {
@@ -43,4 +43,12 @@
 
 .playfield.unstarted .piece.piece-active {
   box-shadow: inset 0 0 10px 3px lightblue;
+}
+
+.playfield:not(.unstarted) .piece.piece-used.piece-active {
+  background: #333;
+}
+
+.playfield.loss .piece.piece-free {
+  background: #f00;
 }

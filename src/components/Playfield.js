@@ -2,9 +2,14 @@ import React, {PropTypes, Component} from 'react';
 import KeyCode from 'keycode-js';
 import Piece from './Piece';
 
+import GAME_STATE from '../enums/GameState';
 import PieceTypes from '../enums/PieceTypes';
 
 import '../styles/Playfield.scss';
+
+const {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_RETURN} = KeyCode;
+
+const animationDelay = 50;
 
 class Playfield extends Component {
 
@@ -16,16 +21,19 @@ class Playfield extends Component {
     this.handlePieceTapped = this.handlePieceTapped.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.moveCursor = this.moveCursor.bind(this);
+    this.lockControls = this.lockControls.bind(this);
+    this.unlockControls = this.unlockControls.bind(this);
     this.updateCursorPosition = this.updateCursorPosition.bind(this);
     this.getValidDirections = this.getValidDirections.bind(this);
     this.hasValidMove = this.hasValidMove.bind(this);
     this.isPuzzleCompleted = this.isPuzzleCompleted.bind(this);
+    this.puzzleDone = this.puzzleDone.bind(this);
 
     document.addEventListener('keydown', this.handleKeyDown);
 
     this.state = {
       cursorPosition: [0, 0],
-      started: false,
+      gameState: GAME_STATE.UNSTARTED,
       playfield: props.playfield || new Array(props.height).fill(new Array(props.width).fill(PieceTypes.Free))
     };
   }
@@ -40,7 +48,7 @@ class Playfield extends Component {
 
   handlePieceTapped (position) {
     let [row, column] = position;
-    if (!this.state.started) {
+    if (this.gameState !== GAME_STATE.UNSTARTED) {
 
       if (this.state.cursorPosition.every((v, i) => v === position[i])) {
         this.startGame();
@@ -54,36 +62,39 @@ class Playfield extends Component {
   }
 
   handleKeyDown (e) {
-    !this.state.started ? this.moveCursor(e.keyCode) : this.doMoveAction(e.keyCode);
+    let {gameState} = this.state;
+
+    if (gameState === GAME_STATE.UNSTARTED) this.moveCursor(e.keyCode);
+    if (gameState === GAME_STATE.STARTED) this.doMoveAction(e.keyCode);
   }
 
   moveCursor (direction) {
-    let {cursorPosition, playfield, started} = this.state;
+    let {gameState, cursorPosition, playfield} = this.state;
 
     switch (direction) {
-      case KeyCode.KEY_UP: {
+      case KEY_UP: {
         if (cursorPosition[0] > 0) this.updateCursorPosition([cursorPosition[0] - 1, cursorPosition[1]]);
         break;
       }
 
-      case KeyCode.KEY_DOWN: {
+      case KEY_DOWN: {
         if (cursorPosition[0] < playfield.length - 1) this.updateCursorPosition([cursorPosition[0] + 1, cursorPosition[1]]);
         break;
       }
 
-      case KeyCode.KEY_LEFT: {
+      case KEY_LEFT: {
         if (cursorPosition[1] > 0) this.updateCursorPosition([cursorPosition[0], cursorPosition[1] - 1]);
         break;
       }
 
-      case KeyCode.KEY_RIGHT: {
+      case KEY_RIGHT: {
         if (cursorPosition[1] < playfield[0].length - 1) this.updateCursorPosition([cursorPosition[0], cursorPosition[1] + 1]);
         break;
       }
 
-      case KeyCode.KEY_RETURN: {
+      case KEY_RETURN: {
         let [row, column] = cursorPosition;
-        if (! started && playfield[row][column] === PieceTypes.Free) {
+        if ((gameState === GAME_STATE.UNSTARTED) && (playfield[row][column] === PieceTypes.Free)) {
           this.updatePieceState(cursorPosition, PieceTypes.Used);
           this.startGame();
         }
@@ -93,83 +104,103 @@ class Playfield extends Component {
   }
 
   doMoveAction (direction) {
-    let {started, cursorPosition} = this.state;
+    let {gameState, cursorPosition} = this.state;
     let validMoves = this.getValidDirections(cursorPosition);
 
-    if (!started) return;
+    if (![GAME_STATE.STARTED, GAME_STATE.MOVING].includes(gameState)) return;
 
     switch (direction) {
-      case KeyCode.KEY_LEFT: {
+      case KEY_LEFT: {
         if (validMoves.left) {
           let nextCursorPosition = [
             cursorPosition[0], 
             cursorPosition[1] - 1
           ];
+          this.lockControls();
           this.updatePieceState(nextCursorPosition, PieceTypes.Used);
           this.updateCursorPosition(nextCursorPosition);
-          window.setTimeout(() => this.doMoveAction(direction), 100);
+          window.setTimeout(() => this.doMoveAction(direction), animationDelay);
           return;
         }
         break;
       }
 
-      case KeyCode.KEY_RIGHT: {
+      case KEY_RIGHT: {
         if (validMoves.right) {
           let nextCursorPosition = [
             cursorPosition[0], 
             cursorPosition[1] + 1
           ];
+          this.lockControls();
           this.updatePieceState(nextCursorPosition, PieceTypes.Used);
           this.updateCursorPosition(nextCursorPosition);
-          window.setTimeout(() => this.doMoveAction(direction), 100);
+          window.setTimeout(() => this.doMoveAction(direction), animationDelay);
           return;
         }
         break;
       }
 
-      case KeyCode.KEY_UP: {
+      case KEY_UP: {
         if (validMoves.up) {
           let nextCursorPosition = [
             cursorPosition[0] - 1, 
             cursorPosition[1]
           ];
+          this.lockControls();
           this.updatePieceState(nextCursorPosition, PieceTypes.Used);
           this.updateCursorPosition(nextCursorPosition);
-          window.setTimeout(() => this.doMoveAction(direction), 100);
+          window.setTimeout(() => this.doMoveAction(direction), animationDelay);
           return;
         }
         break;
       }
 
-      case KeyCode.KEY_DOWN: {
+      case KEY_DOWN: {
         if (validMoves.down) {
           let nextCursorPosition = [
             cursorPosition[0] + 1, 
             cursorPosition[1]
           ];
+          this.lockControls();
           this.updatePieceState(nextCursorPosition, PieceTypes.Used);
           this.updateCursorPosition(nextCursorPosition);
-          window.setTimeout(() => this.doMoveAction(direction), 100);
+          window.setTimeout(() => this.doMoveAction(direction), animationDelay);
           return;
         }
         break;
       }
     }
 
+    this.unlockControls();
+
     let puzzleCompleted = this.isPuzzleCompleted();
     let hasValidMove = this.hasValidMove();
 
     if (puzzleCompleted || !hasValidMove) {
-      this.props.onPuzzleDone(puzzleCompleted);
+      this.puzzleDone(puzzleCompleted);
     }
+  }
+
+  puzzleDone (didWin) {
+    let gameState = didWin ? GAME_STATE.WIN : GAME_STATE.LOSS;
+    this.setState({gameState});
+    this.props.onPuzzleDone(didWin);
   }
 
   updateCursorPosition(position) {
     this.setState({ cursorPosition: position });
   }
 
+  lockControls () {
+    if (this.state.gameState === GAME_STATE.STARTED) this.setState({gameState: GAME_STATE.MOVING});
+  }
+
+  unlockControls () {
+    if (this.state.gameState === GAME_STATE.MOVING) this.setState({gameState: GAME_STATE.STARTED});
+  }
+
   startGame () {
-    this.setState({ started: true });
+    if (this.state.gameState === GAME_STATE.UNSTARTED) this.setState({gameState: GAME_STATE.STARTED});
   }
 
   updatePieceState ([row, column], state, delay = 0) {
@@ -211,9 +242,11 @@ class Playfield extends Component {
   }
 
   render () {
-    let {started} = this.state;
+    let {gameState} = this.state;
+    let started = gameState !== GAME_STATE.UNSTARTED;
+
     return (
-      <div className={`playfield ${started ? 'started' : 'unstarted'}`}>
+      <div className={`playfield ${gameState.toLowerCase()}`}>
         {this.renderRows()}
       </div>
     );
@@ -232,7 +265,7 @@ class Playfield extends Component {
 
   renderRow (row) {
     let {height, width} = this.props;
-    let {playfield, cursorPosition, started} = this.state;
+    let {playfield, cursorPosition, gameState} = this.state;
     let pieces = [];
 
     for (let column = 0; column < width; column++) {
@@ -243,7 +276,7 @@ class Playfield extends Component {
           pieceActive={[row, column].every((v, i) => v === cursorPosition[i])}
           playfield={playfield}
           getValidDirections={this.getValidDirections}
-          started={started}
+          gameState={gameState}
           rows={height}
           columns={width}
           pieceTapped={this.handlePieceTapped} />

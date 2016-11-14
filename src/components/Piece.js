@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 
 import PieceTypes, {PieceClasses} from '../enums/PieceTypes';
+import GAME_STATE from '../enums/GameState';
 
 import '../styles/Piece.scss';
 
@@ -22,12 +23,12 @@ class Piece extends Component {
   }
 
   render () {
-    let {started, pieceState, pieceActive} = this.props;
+    let {gameState, pieceState, pieceActive} = this.props;
 
     let directions = this.props.getValidDirections(this.props.position);
     let directionButtons = [];
 
-    if (started && pieceActive) {
+    if ((gameState === GAME_STATE.STARTED) && pieceActive) {
       directionButtons = Object.keys(directions)
         .map((direction) => directions[direction] ? 
           <div key={direction} className={`move ${direction}`} onMouseDown={this.handleDirectionTap.bind(null, direction)} /> : '');      
@@ -51,7 +52,7 @@ Piece.propTypes = {
   pieceTapped: PropTypes.func,
   rows: PropTypes.number,
   columns: PropTypes.number,
-  started: PropTypes.bool,
+  gameState: PropTypes.oneOf(Object.values(GAME_STATE)),
   getValidDirections: PropTypes.func
 };
 
@@ -62,7 +63,7 @@ Piece.defaultProps = {
   pieceTapped: () => {},
   rows: 0,
   columns: 0,
-  started: false,
+  gameState: GAME_STATE.UNSTARTED,
   getValidDirections: () => {}
 }
 
