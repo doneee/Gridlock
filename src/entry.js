@@ -1,11 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Game from './components/Game';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router';
+import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 
-import './styles/document.scss';
+import makeRoutes from './routes';
+import * as reducers from './reducers/';
 
-let entryPoint = document.getElementById('root');
+const store = createStore(
+  combineReducers({
+    ...reducers,
+    routing: routerReducer
+  }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
+const routes = makeRoutes(store);
+const history = syncHistoryWithStore(browserHistory, store);
+
+
+const Root = (
+  <Provider store={store}>
+    <Router history={history}>
+      {routes}
+    </Router>
+  </Provider>
+);
+
+const entryPoint = document.getElementById('root');
+ReactDOM.render(Root, entryPoint);
 document.body.classList.remove('uninitialized');
-
-ReactDOM.render(<Game />, entryPoint);
