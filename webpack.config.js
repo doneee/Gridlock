@@ -1,3 +1,4 @@
+let FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new FaviconsWebpackPlugin('./src/icon.png'),
     new HtmlWebpackPlugin({
       title: 'Gridlock',
       template: './src/index.html'
