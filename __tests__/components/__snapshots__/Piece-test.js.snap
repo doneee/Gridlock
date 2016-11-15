@@ -1,0 +1,60 @@
+exports[`<Piece /> renders direction buttons when active and game is started 1`] = `
+<div
+  className="piece piece-free piece-active"
+  onTouchTap={[Function]}
+  style={
+    Object {
+      "height": "calc(100% / 6)",
+      "width": "calc(100% / 6)",
+    }
+  }>
+  <div
+    className="move up"
+    onMouseDown={[Function]} />
+  <div
+    className="move down"
+    onMouseDown={[Function]} />
+  <div
+    className="move left"
+    onMouseDown={[Function]} />
+  <div
+    className="move right"
+    onMouseDown={[Function]} />
+</div>
+`;
+
+exports[`<Piece /> renders with active state 1`] = `
+<div
+  className="piece piece-free piece-active"
+  onTouchTap={[Function]}
+  style={
+    Object {
+      "height": "calc(100% / 6)",
+      "width": "calc(100% / 6)",
+    }
+  } />
+`;
+
+exports[`<Piece /> renders with default props 1`] = `
+<div
+  className="piece piece-free "
+  onTouchTap={[Function]}
+  style={
+    Object {
+      "height": "calc(100% / 6)",
+      "width": "calc(100% / 6)",
+    }
+  } />
+`;
+
+exports[`<Piece /> renders with used state 1`] = `
+<div
+  className="piece piece-used "
+  onTouchTap={[Function]}
+  style={
+    Object {
+      "height": "calc(100% / 6)",
+      "width": "calc(100% / 6)",
+    }
+  } />
+`;

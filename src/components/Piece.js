@@ -47,7 +47,7 @@ class Piece extends Component {
 
 Piece.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
-  pieceState: PropTypes.number,
+  pieceState: PropTypes.oneOf(Object.values(PieceTypes)),
   pieceActive: PropTypes.bool,
   pieceTapped: PropTypes.func,
   rows: PropTypes.number,
@@ -64,7 +64,7 @@ Piece.defaultProps = {
   rows: 0,
   columns: 0,
   gameState: GAME_STATE.UNSTARTED,
-  getValidDirections: () => {}
+  getValidDirections: () => ({ up: true, down: true, left: true, right: true })
 }
 
 export default Piece;
