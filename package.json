@@ -34,6 +34,7 @@
     "favicons-webpack-plugin": "0.0.7",
     "html-webpack-plugin": "^2.24.1",
     "keycode-js": "0.0.3",
+    "material-ui": "^0.16.3",
     "material-ui-build": "github:callemall/material-ui",
     "node-sass": "^3.10.1",
     "react": "^15.4.0",
