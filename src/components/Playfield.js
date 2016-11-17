@@ -28,33 +28,57 @@ class Playfield extends Component {
     this.hasValidMove = this.hasValidMove.bind(this);
     this.isPuzzleCompleted = this.isPuzzleCompleted.bind(this);
     this.puzzleDone = this.puzzleDone.bind(this);
+    this.doMoveAction = this.doMoveAction.bind(this);
+    this.restartGame = this.restartGame.bind(this);
 
     document.addEventListener('keydown', this.handleKeyDown);
 
     this.state = {
       cursorPosition: [0, 0],
       gameState: GAME_STATE.UNSTARTED,
-      playfield: props.playfield || new Array(props.height).fill(new Array(props.width).fill(PieceTypes.Free))
+      playfield: JSON.parse(JSON.stringify(props.playfield)) || new Array(props.height).fill(new Array(props.width).fill(PieceTypes.Free))
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.editMode && !this.props.editMode) {
+      this.restartGame();
+    }
   }
 
-  componentWillUnmount() {
+  componentDidUpdate (prevProps, prevState) {
+  }
+
+  componentWillUnmount () {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handlePieceTapped (position) {
-    let [row, column] = position;
-    if (this.gameState !== GAME_STATE.UNSTARTED) {
+  restartGame () {
+    let playfield = this.state.playfield
+      .map((row) => row
+        .map((piece) => piece !== PieceTypes.Used ? piece : PieceTypes.Free));
 
-      if (this.state.cursorPosition.every((v, i) => v === position[i])) {
+    this.setState({
+      playfield,
+      gameState: GAME_STATE.UNSTARTED
+    });
+  }
+
+  handlePieceTapped (position) {
+    let {playfield, gameState, cursorPosition} = this.state;
+    let [row, column] = position;
+
+    if (this.props.editMode) {
+      this.updatePieceState(position, 
+        (playfield[row][column] !== PieceTypes.Free) ? PieceTypes.Free : PieceTypes.Block);
+
+    } else if (gameState === GAME_STATE.UNSTARTED) {
+
+      if (cursorPosition.every((v, i) => v === position[i])) {
         this.startGame();
         this.updatePieceState(position, PieceTypes.Used);
 
-      } else if (this.state.playfield[row][column] === PieceTypes.Free) {
+      } else if (playfield[row][column] === PieceTypes.Free) {
         this.updateCursorPosition(position);
 
       }
@@ -94,10 +118,17 @@ class Playfield extends Component {
 
       case KEY_RETURN: {
         let [row, column] = cursorPosition;
-        if ((gameState === GAME_STATE.UNSTARTED) && (playfield[row][column] === PieceTypes.Free)) {
-          this.updatePieceState(cursorPosition, PieceTypes.Used);
-          this.startGame();
+
+        if (this.props.editMode) {
+          this.updatePieceState(cursorPosition, 
+            (playfield[row][column] !== PieceTypes.Free) ? PieceTypes.Free : PieceTypes.Block);
+        } else {
+          if ((gameState === GAME_STATE.UNSTARTED) && (playfield[row][column] === PieceTypes.Free)) {
+            this.updatePieceState(cursorPosition, PieceTypes.Used);
+            this.startGame();
+          }
         }
+
         break;
       }
     }
@@ -110,6 +141,7 @@ class Playfield extends Component {
     if (![GAME_STATE.STARTED, GAME_STATE.MOVING].includes(gameState)) return;
 
     switch (direction) {
+      case 'left':
       case KEY_LEFT: {
         if (validMoves.left) {
           let nextCursorPosition = [
@@ -125,6 +157,7 @@ class Playfield extends Component {
         break;
       }
 
+      case 'right':
       case KEY_RIGHT: {
         if (validMoves.right) {
           let nextCursorPosition = [
@@ -140,6 +173,7 @@ class Playfield extends Component {
         break;
       }
 
+      case 'up':
       case KEY_UP: {
         if (validMoves.up) {
           let nextCursorPosition = [
@@ -155,6 +189,7 @@ class Playfield extends Component {
         break;
       }
 
+      case 'down':
       case KEY_DOWN: {
         if (validMoves.down) {
           let nextCursorPosition = [
@@ -265,7 +300,7 @@ class Playfield extends Component {
 
   renderRow (row) {
     let {height, width} = this.props;
-    let {playfield, cursorPosition, gameState} = this.state;
+    let {playfield, cursorPosition, gameState, editMode} = this.state;
     let pieces = [];
 
     for (let column = 0; column < width; column++) {
@@ -277,9 +312,11 @@ class Playfield extends Component {
           playfield={playfield}
           getValidDirections={this.getValidDirections}
           gameState={gameState}
+          editMode={editMode}
           rows={height}
           columns={width}
-          pieceTapped={this.handlePieceTapped} />
+          pieceTapped={this.handlePieceTapped}
+          directionTapped={this.doMoveAction} />
       );
     }
 

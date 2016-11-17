@@ -19,7 +19,7 @@ class Piece extends Component {
   }
 
   handleDirectionTap (direction, e) {
-    console.log(direction, e.type);
+    this.props.directionTapped(direction);
   }
 
   render () {
@@ -31,14 +31,14 @@ class Piece extends Component {
     if ((gameState === GAME_STATE.STARTED) && pieceActive) {
       directionButtons = Object.keys(directions)
         .map((direction) => directions[direction] ? 
-          <div key={direction} className={`move ${direction}`} onMouseDown={this.handleDirectionTap.bind(null, direction)} /> : '');      
+          <div key={direction} className={`move ${direction}`} onMouseDown={() => this.handleDirectionTap(direction)} /> : '');      
     }
 
     return (
       <div 
         className={`piece ${PieceClasses[pieceState]} ${pieceActive ? 'piece-active' : ''}`}
         style={{height: 'calc(100% / 6)', width: 'calc(100% / 6)'}}
-        onTouchTap={this.handleTouchTap}>
+        onMouseDown={this.handleTouchTap}>
           {directionButtons}
         </div>
     );
@@ -50,6 +50,7 @@ Piece.propTypes = {
   pieceState: PropTypes.oneOf(Object.values(PieceTypes)),
   pieceActive: PropTypes.bool,
   pieceTapped: PropTypes.func,
+  directionTapped: PropTypes.func,
   rows: PropTypes.number,
   columns: PropTypes.number,
   gameState: PropTypes.oneOf(Object.values(GAME_STATE)),
@@ -61,6 +62,7 @@ Piece.defaultProps = {
   pieceState: 0,
   pieceActive: false,
   pieceTapped: () => {},
+  directionTapped: () => {},
   rows: 0,
   columns: 0,
   gameState: GAME_STATE.UNSTARTED,
