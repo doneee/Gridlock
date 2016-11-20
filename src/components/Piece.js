@@ -3,7 +3,7 @@ import React, {PropTypes, Component} from 'react';
 import PieceTypes, {PieceClasses} from '../enums/PieceTypes';
 import GAME_STATE from '../enums/GameState';
 
-import '../styles/Piece.scss';
+import '../styles/Components/Piece.scss';
 
 class Piece extends Component {
 
@@ -23,7 +23,7 @@ class Piece extends Component {
   }
 
   render () {
-    let {gameState, pieceState, pieceActive} = this.props;
+    let {gameState, pieceState, pieceActive, pieceDimensions} = this.props;
 
     let directions = this.props.getValidDirections(this.props.position);
     let directionButtons = [];
@@ -31,13 +31,17 @@ class Piece extends Component {
     if ((gameState === GAME_STATE.STARTED) && pieceActive) {
       directionButtons = Object.keys(directions)
         .map((direction) => directions[direction] ? 
-          <div key={direction} className={`move ${direction}`} onMouseDown={() => this.handleDirectionTap(direction)} /> : '');      
+          <div key={direction} 
+            className={`move ${direction}`}
+            style={{height: pieceDimensions[1], width: pieceDimensions[0]}}
+            onMouseDown={() => this.handleDirectionTap(direction)} />
+        : '');      
     }
 
     return (
       <div 
         className={`piece ${PieceClasses[pieceState]} ${pieceActive ? 'piece-active' : ''}`}
-        style={{height: 'calc(100% / 6)', width: 'calc(100% / 6)'}}
+        style={{height: pieceDimensions[1], width: pieceDimensions[0]}}
         onMouseDown={this.handleTouchTap}>
           {directionButtons}
         </div>

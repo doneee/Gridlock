@@ -12,6 +12,7 @@ module.exports = {
     loaders: [
       { test: /\.css$/, loader: "style!css" },
       { test: /\.scss$/, loaders: ["style", "css", "sass"] },
+      { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file" },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,

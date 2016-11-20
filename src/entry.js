@@ -8,6 +8,10 @@ import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 import makeRoutes from './routes';
 import * as reducers from './reducers/';
 
+
+// import injectTapEventPlugin from 'react-tap-event-plugin';
+// injectTapEventPlugin();
+
 const store = createStore(
   combineReducers({
     ...reducers,

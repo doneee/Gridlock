@@ -5,7 +5,7 @@ import Piece from './Piece';
 import GAME_STATE from '../enums/GameState';
 import PieceTypes from '../enums/PieceTypes';
 
-import '../styles/Playfield.scss';
+import '../styles/Components/Playfield.scss';
 
 const {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_RETURN} = KeyCode;
 
@@ -31,9 +31,12 @@ class Playfield extends Component {
     this.doMoveAction = this.doMoveAction.bind(this);
     this.restartGame = this.restartGame.bind(this);
 
+    this._playfieldElement = null;
+
     document.addEventListener('keydown', this.handleKeyDown);
 
     this.state = {
+      pieceDimensions: [0, 0],
       cursorPosition: [0, 0],
       gameState: GAME_STATE.UNSTARTED,
       playfield: JSON.parse(JSON.stringify(props.playfield)) || new Array(props.height).fill(new Array(props.width).fill(PieceTypes.Free))
@@ -44,6 +47,20 @@ class Playfield extends Component {
     if (nextProps.editMode && !this.props.editMode) {
       this.restartGame();
     }
+  }
+
+  componentDidMount () {
+    console.log(this._playfieldElement);
+    if (this._playfieldElement) {
+      let clientWidth = this._playfieldElement.clientWidth;
+      this.setState({
+        pieceDimensions: [
+          clientWidth / this.props.width,
+          clientWidth / this.props.height
+        ]
+      });      
+    }
+
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -281,7 +298,8 @@ class Playfield extends Component {
     let started = gameState !== GAME_STATE.UNSTARTED;
 
     return (
-      <div className={`playfield ${gameState.toLowerCase()}`}>
+      <div className={`playfield ${gameState.toLowerCase()}`}
+        ref={(e) => this._playfieldElement = e}>
         {this.renderRows()}
       </div>
     );
@@ -300,7 +318,7 @@ class Playfield extends Component {
 
   renderRow (row) {
     let {height, width} = this.props;
-    let {playfield, cursorPosition, gameState, editMode} = this.state;
+    let {playfield, cursorPosition, gameState, editMode, pieceDimensions} = this.state;
     let pieces = [];
 
     for (let column = 0; column < width; column++) {
@@ -315,6 +333,7 @@ class Playfield extends Component {
           editMode={editMode}
           rows={height}
           columns={width}
+          pieceDimensions={pieceDimensions}
           pieceTapped={this.handlePieceTapped}
           directionTapped={this.doMoveAction} />
       );

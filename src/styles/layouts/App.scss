@@ -1,0 +1,22 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body.uninitialized {
+  background: #f00;
+}
+
+.layout-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #333;
+}
+
+.layout-app .layout-app-content {
+  display: flex;  
+  flex: 1;
+  flex-direction: column;
+  padding: 5px;
+}

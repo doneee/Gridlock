@@ -5,6 +5,8 @@ import React, {Component} from 'react';
 
 import Playfield from './Playfield';
 
+import '../styles/Components/Game.scss';
+
 const Puzzle = [
   [0,0,0,0,0,0],
   [0,2,0,0,0,0],
@@ -32,9 +34,8 @@ class Game extends Component {
 
   render () {
     return (
-      <div>
+      <div className="play-gridlock">
         <Playfield playfield={Puzzle} editMode={this.state.editMode} />
-        <div><input type="checkbox" onClick={this.toggleEditMode} /> Edit Mode</div>
       </div>
     );
   }

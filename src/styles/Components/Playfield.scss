@@ -3,8 +3,9 @@
   position: relative;
   border: solid 1px #000;
 
-  height: 300px;
-  width: 300px;
-
+  height: calc(100vw - 10px);
+  width: calc(100vw - 10px);
+  max-height: 600px;
+  max-width: 600px;
   font-size: 0;
 }
