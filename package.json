@@ -12,6 +12,10 @@
     "puzzle",
     "game"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doneee/gridlock.git"
+  },
   "author": "Donny Swany",
   "license": "ISC",
   "devDependencies": {
@@ -37,10 +41,12 @@
     "favicons-webpack-plugin": "0.0.7",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
+    "json-loader": "^0.5.4",
     "keycode-js": "0.0.3",
     "material-ui": "^0.16.4",
     "material-ui-build": "github:callemall/material-ui",
     "node-sass": "^3.10.1",
+    "node-uuid": "^1.4.7",
     "react": "^15.4.0",
     "react-dom": "^15.0.0",
     "react-redux": "^4.4.6",
