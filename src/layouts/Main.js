@@ -39,7 +39,7 @@ class Main extends Component {
         <h1 className="title-main">Gridlock</h1>
         <div className="container-action-buttons">
           <div className="action-button"><Link to="/play"><FlatButton label="Play" primary /></Link></div>
-          <div className="action-button"><Link to="/create"><FlatButton label="Level Creator" /></Link></div>
+          <div className="action-button"><Link to="/create"><FlatButton label="Create" /></Link></div>
           <div className="action-button">
             <FlatButton label="How to Play" onTouchTap={() => this.handleDialogState('howToPlay', true)} /></div>
           <div className="action-button">
