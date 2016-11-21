@@ -5,10 +5,7 @@
   justify-content: center;
 
   img.logo-main {
-    width: calc(100% - 40px);
-    max-width: 600px;
-    height: auto;
-    margin: 20px;
+    margin: 0 auto;
   }    
 
   h1.title-main {
@@ -22,4 +19,8 @@
   .container-action-buttons {
     text-align: center;
   }
+}
+
+.muidocs-icon-custom-github:before {
+    content: "\e625";
 }

@@ -44,7 +44,7 @@ class Piece extends Component {
         style={{height: pieceDimensions[1], width: pieceDimensions[0]}}
         onMouseDown={this.handleTouchTap}>
           {directionButtons}
-        </div>
+      </div>
     );
   }
 }
