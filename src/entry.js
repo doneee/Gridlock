@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
-import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router';
+import {Router, browserHistory} from 'react-router';
 import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 
 import makeRoutes from './routes';
 import * as reducers from './reducers/';
 
 
-// import injectTapEventPlugin from 'react-tap-event-plugin';
-// injectTapEventPlugin();
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 const store = createStore(
   combineReducers({

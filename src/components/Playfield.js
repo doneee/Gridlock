@@ -50,7 +50,6 @@ class Playfield extends Component {
   }
 
   componentDidMount () {
-    console.log(this._playfieldElement);
     if (this._playfieldElement) {
       let clientWidth = this._playfieldElement.clientWidth;
       this.setState({

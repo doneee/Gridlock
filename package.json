@@ -17,6 +17,9 @@
   "devDependencies": {
     "babel-jest": "^17.0.2",
     "enzyme": "^2.6.0",
+    "eslint": "^3.10.2",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-react": "^6.7.1",
     "jest": "^17.0.2",
     "react-addons-test-utils": "^15.0.0",
     "react-test-renderer": "^15.0.0"
@@ -35,7 +38,7 @@
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
     "keycode-js": "0.0.3",
-    "material-ui": "^0.16.3",
+    "material-ui": "^0.16.4",
     "material-ui-build": "github:callemall/material-ui",
     "node-sass": "^3.10.1",
     "react": "^15.4.0",
@@ -43,7 +46,7 @@
     "react-redux": "^4.4.6",
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.7",
-    "react-tap-event-plugin": "^1.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",

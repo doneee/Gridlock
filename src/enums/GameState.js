@@ -5,4 +5,4 @@ export default {
   WIN: 'WIN',
   LOSS: 'LOSS',
   EDIT: 'EDIT'
-}
+};

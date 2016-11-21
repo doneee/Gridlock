@@ -2,7 +2,7 @@ export default {
   Free: 0,
   Used: 1,
   Block: 2
-}
+};
 
 export const PieceClasses = {
   0: 'piece-free',

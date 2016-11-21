@@ -3,11 +3,8 @@ import {
   deepOrange900,
   orange100,
   orange200,
-  orange300,
   orange400,
-  cyan700,
   grey600,
-  pinkA100, pinkA200, pinkA400,
   fullWhite,
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
