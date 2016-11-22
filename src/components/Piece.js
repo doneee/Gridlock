@@ -3,7 +3,7 @@ import React, {PropTypes, Component} from 'react';
 import PieceTypes, {PieceClasses} from '../enums/PieceTypes';
 import GAME_STATE from '../enums/GameState';
 
-import '../styles/Components/Piece.scss';
+import '../styles/components/Piece.scss';
 
 class Piece extends Component {
 

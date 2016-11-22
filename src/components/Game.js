@@ -1,20 +1,8 @@
 import React, {Component} from 'react';
 
-// import injectTapEventPlugin from 'react-tap-event-plugin';
-// injectTapEventPlugin();
-
 import Playfield from './Playfield';
-
-import '../styles/Components/Game.scss';
-
-const Puzzle = [
-  [0,0,0,0,0,0],
-  [0,2,0,0,0,0],
-  [0,0,0,2,0,0],
-  [0,0,0,2,0,0],
-  [0,2,0,0,0,0],
-  [0,0,0,0,0,0],
-];
+import Puzzles from 'data/puzzles/';
+import '../styles/components/Game.scss';
 
 class Game extends Component {
 
@@ -35,7 +23,7 @@ class Game extends Component {
   render () {
     return (
       <div className="play-gridlock">
-        <Playfield playfield={Puzzle} editMode={this.state.editMode} />
+        <Playfield playfield={Puzzles[this.props.id].puzzle} editMode={this.state.editMode} />
       </div>
     );
   }

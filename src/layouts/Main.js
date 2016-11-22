@@ -33,13 +33,17 @@ class Main extends Component {
 
 
   render () {
+    let {push} = this.props.router;
+
     return (
       <div className="layout-main">
         <img className="logo-main" src={ImageLogo} />
         <h1 className="title-main">Gridlock</h1>
         <div className="container-action-buttons">
-          <div className="action-button"><Link to="/play"><FlatButton label="Play" primary /></Link></div>
-          <div className="action-button"><Link to="/create"><FlatButton label="Create" /></Link></div>
+          <div className="action-button">
+            <FlatButton label="Play" primary onTouchTap={() => push('/play')} /></div>
+          <div className="action-button">
+            <FlatButton label="Create" onTouchTap={() => push('/create')} disabled /></div>
           <div className="action-button">
             <FlatButton label="How to Play" onTouchTap={() => this.handleDialogState('howToPlay', true)} /></div>
           <div className="action-button">

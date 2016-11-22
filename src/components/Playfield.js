@@ -5,7 +5,7 @@ import Piece from './Piece';
 import GAME_STATE from '../enums/GameState';
 import PieceTypes from '../enums/PieceTypes';
 
-import '../styles/Components/Playfield.scss';
+import '../styles/components/Playfield.scss';
 
 const {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_RETURN} = KeyCode;
 

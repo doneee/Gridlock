@@ -17,7 +17,7 @@ class Play extends Component {
   render () {
     return (
       <div className="layout-play">
-        <Game />
+        <Game id={this.props.params.id} />
       </div>
     );    
   }

@@ -1,0 +1,21 @@
+.puzzle-selector {
+  width: calc(100vw - 10px);
+  height: calc(100vw - 10px);
+
+  .puzzle-selector-item {
+    display: inline-block;
+    box-sizing: border-box;
+    width: calc((100vw - 10px) / 6);
+    height: calc((100vw - 10px) / 6);
+    border: solid 1px #000;
+    background: #fff;
+    text-align: center;
+  }
+
+  .puzzle-name {
+    font-size: calc((100vw - 10px) / 6 - 10px);
+    line-height: calc((100vw - 10px) / 6);
+    vertical-align: top;
+    width: calc((100vw - 10px) / 6);
+  }
+}
