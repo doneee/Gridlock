@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 
-import Playfield from './Playfield';
+import Playfield from 'components/Playfield';
 import Puzzles from 'data/puzzles/';
-import '../styles/components/Game.scss';
+
+import 'styles/components/Game.scss';
 
 class Game extends Component {
 

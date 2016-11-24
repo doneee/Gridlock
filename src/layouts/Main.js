@@ -3,7 +3,8 @@ import {Link} from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
-import '../styles/layouts/Main.scss';
+import FullFrame from 'components/FullFrame';
+import 'styles/layouts/Main.scss';
 import ImageLogo from '../icon.png';
 
 class Main extends Component {
@@ -36,22 +37,24 @@ class Main extends Component {
     let {push} = this.props.router;
 
     return (
-      <div className="layout-main">
-        <img className="logo-main" src={ImageLogo} />
-        <h1 className="title-main">Gridlock</h1>
-        <div className="container-action-buttons">
-          <div className="action-button">
-            <FlatButton label="Play" primary onTouchTap={() => push('/play')} /></div>
-          <div className="action-button">
-            <FlatButton label="Create" onTouchTap={() => push('/create')} disabled /></div>
-          <div className="action-button">
-            <FlatButton label="How to Play" onTouchTap={() => this.handleDialogState('howToPlay', true)} /></div>
-          <div className="action-button">
-            <FlatButton label="About" onTouchTap={() => this.handleDialogState('about', true)} /></div>
+      <FullFrame>
+        <div className="layout-main">
+          <img className="logo-main" src={ImageLogo} />
+          <h1 className="title-main">Gridlock</h1>
+          <div className="container-action-buttons">
+            <div className="action-button">
+              <FlatButton label="Play" primary onTouchTap={() => push('/select')} /></div>
+            <div className="action-button">
+              <FlatButton label="Create" onTouchTap={() => push('/create')} disabled /></div>
+            <div className="action-button">
+              <FlatButton label="How to Play" onTouchTap={() => this.handleDialogState('howToPlay', true)} /></div>
+            <div className="action-button">
+              <FlatButton label="About" onTouchTap={() => this.handleDialogState('about', true)} /></div>
+          </div>
+          {this.renderAboutDialog()}
+          {this.renderHowToPlayDialog()}
         </div>
-        {this.renderAboutDialog()}
-        {this.renderHowToPlayDialog()}
-      </div>
+      </FullFrame>
     );
   }
 

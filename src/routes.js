@@ -10,6 +10,6 @@ export default (store) => (
   <Route path="/" component={LayoutApp}>
     <IndexRoute component={LayoutMain} />
     <Route path="play/:id" component={LayoutPlay} />
-    <Route path="play" component={LayoutSelectPuzzle} />
+    <Route path="select" component={LayoutSelectPuzzle} />
   </Route>
 );
