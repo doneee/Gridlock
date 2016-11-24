@@ -5,10 +5,10 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import FlatButton from 'material-ui/FlatButton';
 
-import AppFrame from 'components/AppFrame';
+import View from 'containers/View';
 import Game from 'components/Game';
 
-import 'styles/layouts/Play.scss';
+import 'styles/containers/Play.scss';
 
 class Play extends Component {
 
@@ -23,19 +23,17 @@ class Play extends Component {
   }
 
   render () {
-    let backButton = (
-      <IconButton>
-        <HardwareKeyboardArrowLeft onTouchTap={this.handleBackToSelect} />
+    const backToSelect = (
+      <IconButton onTouchTap={this.handleBackToSelect}>
+        <HardwareKeyboardArrowLeft  />
       </IconButton>
     );
 
     return (
-      <AppFrame key="play" title="Play"
-        iconElementLeft={backButton}>
-        <div className="layout-play">
-          <Game id={this.props.params.id} />
-        </div>
-      </AppFrame>
+      <View className="play" title="Play"
+        iconElementLeft={backToSelect}>
+        <Game id={this.props.params.id} />
+      </View>
     );    
   }
 }

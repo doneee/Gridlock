@@ -1,13 +1,21 @@
+let webpack = require('webpack');
+
 let FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let path = require('path');
 
 module.exports = {
-  entry: "./src/entry.js",
+  entry: [
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    'react-hot-loader/patch',
+    './src/entry.js'
+  ],
   output: {
     path: __dirname + '/dist',
-    filename: "bundle.js"
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   devtool: 'source-map',
   module: {
@@ -17,18 +25,12 @@ module.exports = {
       { test: /\.scss$/, loaders: ["style", "css", "sass"] },
       { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file" },
       
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react', 'stage-0']
-        }
-      },
-      {enforce: 'pre', test: /\.js$/,  loader: 'eslint-loader', exclude: /node_modules/},
+      { test: /\.js?$/, exclude: /node_modules/, loader: 'babel' },
+      // {enforce: 'pre', test: /\.js$/,  loader: 'eslint-loader', exclude: /node_modules/},
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new FaviconsWebpackPlugin('./src/icon.png'),
     new HtmlWebpackPlugin({
       title: 'Gridlock',
