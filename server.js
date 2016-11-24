@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
+var ip = require('ip');
 
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
@@ -21,10 +22,10 @@ new WebpackDevServer(webpack(config), {
       chunks: false,
       chunkModules: false
     }
-}).listen(3000, 'localhost', function (err) {
+}).listen(process.env.port || 3000, ip.address() , function (err) {
     if (err) {
         console.log(err);
     }
 
-  console.log('Listening at localhost:3000');
+  console.log(`Listening at ${ip.address()}:${process.env.port || 3000}`);
 });
