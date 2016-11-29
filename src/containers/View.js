@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import { RouteTransition } from 'react-router-transition';
 import AppBar from 'material-ui/AppBar';
 
 import 'styles/containers/View.scss';
@@ -6,15 +7,10 @@ import 'styles/containers/View.scss';
 class View extends Component {
   constructor (props) {
     super(props);
-    console.log(this.props.iconElementLeft);
   }
 
   componentDidMount () {
 
-  }
-
-  componentWillUnmount() {
-    console.log('unmount', this.props.className);
   }
 
   render () {

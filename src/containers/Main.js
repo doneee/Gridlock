@@ -40,13 +40,13 @@ class Main extends Component {
         <h1 className="title-main">Gridlock</h1>
         <div className="container-action-buttons">
           <div className="action-button">
-            <FlatButton label="Play" primary onTouchTap={() => browserHistory.push('/select')} /></div>
+            <FlatButton label="Play" primary onTouchTap={() => browserHistory.push('/select')} labelStyle={{fontSize: '20px', fontWeight: 'bold'}} /></div>
           <div className="action-button">
-            <FlatButton label="Create" onTouchTap={() => browserHistory.push('/create')} disabled /></div>
+            <FlatButton label="Create" onTouchTap={() => browserHistory.push('/create')} disabled labelStyle={{fontSize: '20px'}} /></div>
           <div className="action-button">
-            <FlatButton label="How to Play" onTouchTap={() => this.handleDialogState('howToPlay', true)} /></div>
+            <FlatButton label="How to Play" onTouchTap={() => this.handleDialogState('howToPlay', true)} labelStyle={{fontSize: '20px'}} /></div>
           <div className="action-button">
-            <FlatButton label="About" onTouchTap={() => this.handleDialogState('about', true)} /></div>
+            <FlatButton label="About" onTouchTap={() => this.handleDialogState('about', true)} labelStyle={{fontSize: '20px'}} /></div>
         </div>
         {this.renderAboutDialog()}
         {this.renderHowToPlayDialog()}

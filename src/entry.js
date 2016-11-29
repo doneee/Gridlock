@@ -31,6 +31,7 @@ ReactDOM.render(
   </AppContainer>,
   entryPoint
 );
+
 document.body.classList.remove('uninitialized');
 
 if (module.hot) {

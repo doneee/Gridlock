@@ -8,6 +8,8 @@ import FlatButton from 'material-ui/FlatButton';
 import View from 'containers/View';
 import Game from 'components/Game';
 
+import Puzzles from 'data/puzzles/';
+
 import 'styles/containers/Play.scss';
 
 class Play extends Component {
@@ -30,7 +32,7 @@ class Play extends Component {
     );
 
     return (
-      <View className="play" title="Play"
+      <View className="play" title={`Puzzle: ${Puzzles[this.props.params.id].name}`}
         iconElementLeft={backToSelect}>
         <Game id={this.props.params.id} />
       </View>
