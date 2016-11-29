@@ -1,9 +1,10 @@
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config');
-var ip = require('ip');
+import Webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
+import config from './webpack.config';
+import ip from 'ip';
 
-new WebpackDevServer(webpack(config), {
+
+const devServerConfig = {
     publicPath: config.output.publicPath,
     hot: true,
     historyApiFallback: true,
@@ -13,7 +14,6 @@ new WebpackDevServer(webpack(config), {
     // to see success build.
     noInfo: false,
     stats: {
-      // Config for minimal console.log mess.
       assets: false,
       colors: true,
       version: false,
@@ -22,10 +22,12 @@ new WebpackDevServer(webpack(config), {
       chunks: false,
       chunkModules: false
     }
-}).listen(process.env.port || 3000, ip.address() , function (err) {
+}
+
+new WebpackDevServer(Webpack(config), devServerConfig)
+  .listen(process.env.port || 3000, process.env.host || '0.0.0.0' , (err) => {
     if (err) {
         console.log(err);
     }
-
-  console.log(`Listening at ${ip.address()}:${process.env.port || 3000}`);
+    console.log(`Listening at ${process.env.host || '0.0.0.0'}:${process.env.port || 3000}`);
 });
