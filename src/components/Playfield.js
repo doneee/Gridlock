@@ -41,7 +41,7 @@ class Playfield extends Component {
       pieceDimensions: [0, 0],
       cursorPosition: [0, 0],
       gameState: GAME_STATE.UNSTARTED,
-      playfield: JSON.parse(JSON.stringify(props.playfield)) || new Array(props.height).fill(new Array(props.width).fill(PieceTypes.Free))
+      playfield: JSON.parse(JSON.stringify(props.playfield)) || new Array(props.height).fill(new Array(props.width).fill(PieceTypes.Free)),
     };
   }
 

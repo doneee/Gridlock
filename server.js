@@ -25,9 +25,9 @@ const devServerConfig = {
 }
 
 new WebpackDevServer(Webpack(config), devServerConfig)
-  .listen(process.env.port || 3000, process.env.host || '0.0.0.0' , (err) => {
+  .listen(process.env.PORT || 3000, process.env.HOST || '0.0.0.0' , (err) => {
     if (err) {
         console.log(err);
     }
-    console.log(`Listening at ${process.env.host || '0.0.0.0'}:${process.env.port || 3000}`);
+    console.log(`Listening at ${process.env.HOST || '0.0.0.0'}:${process.env.PORT || 3000}`);
 });
