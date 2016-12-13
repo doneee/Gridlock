@@ -15,6 +15,9 @@ class Game extends Component {
 
     this.toggleEditMode = this.toggleEditMode.bind(this);
     this.handleOnPuzzleDone = this.handleOnPuzzleDone.bind(this);
+    this.restartGame = this.restartGame.bind(this);
+
+    this._playfieldInstance = null;
 
     this.state = {
       editMode: false,
@@ -32,14 +35,19 @@ class Game extends Component {
     });
   }
 
+  restartGame () {
+    this._playfieldInstance && this._playfieldInstance.restartGame();
+  }
+
   render () {
     return (
       <div className="play-gridlock">
-        <Playfield
+        <Playfield ref={(instance) => this._playfieldInstance = instance}
           playfield={Puzzles[this.props.id].puzzle} 
           editMode={this.state.editMode}
           onPuzzleDone={this.handleOnPuzzleDone} />
           {this.renderResultDialog()}
+          <button onTouchTap={this.restartGame}>Reset</button>
       </div>
     );
   }

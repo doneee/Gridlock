@@ -16,6 +16,7 @@ class Playfield extends Component {
   constructor (props) {
     super(props);
 
+    this.updatePlayfieldDimensions = this.updatePlayfieldDimensions.bind(this);
     this.startGame = this.startGame.bind(this);
     this.updatePieceState = this.updatePieceState.bind(this);
     this.handlePieceTapped = this.handlePieceTapped.bind(this);
@@ -34,6 +35,7 @@ class Playfield extends Component {
     this._playfieldElement = null;
 
     document.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('resize', this.updatePlayfieldDimensions);
 
     this.state = {
       pieceDimensions: [0, 0],
@@ -50,6 +52,19 @@ class Playfield extends Component {
   }
 
   componentDidMount () {
+    this.updatePlayfieldDimensions();
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('resize', this.updatePlayfieldDimensions);
+  }
+
+  updatePlayfieldDimensions () {
+    console.log('dimensions')
     if (this._playfieldElement) {
       let clientWidth = this._playfieldElement.clientWidth;
       this.setState({
@@ -59,14 +74,6 @@ class Playfield extends Component {
         ]
       });      
     }
-
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-  }
-
-  componentWillUnmount () {
-    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   restartGame () {
