@@ -52,7 +52,6 @@
     "keycode-js": "0.0.3",
     "material-ui": "^0.16.4",
     "node-sass": "^3.10.1",
-    "node-uuid": "^1.4.7",
     "react": "^15.4.0",
     "react-dom": "^15.0.0",
     "react-hot-loader": "^3.0.0-beta.6",
@@ -65,11 +64,14 @@
     "redux-thunk": "^2.1.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
+    "uuid": "^3.0.1",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   },
   "jest": {
-    "modulePaths": ["src"],
+    "modulePaths": [
+      "src"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
       "\\.(css|less|sass|scss)$": "<rootDir>/mocks/styleMock.js"
