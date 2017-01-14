@@ -65,6 +65,7 @@ Piece.defaultProps = {
   position: [0, 0],
   pieceState: 0,
   pieceActive: false,
+  pieceDimensions: [0, 0],
   pieceTapped: () => {},
   directionTapped: () => {},
   rows: 0,
